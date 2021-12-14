@@ -1,0 +1,72 @@
+
+Resources:
+
+    CognitoUserPool:
+      Type: "AWS::Cognito::UserPool"
+      Properties:
+        MfaConfiguration: OFF
+        UserPoolName: ${opt:stage}-user-pool
+        UsernameAttributes:
+          - email
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: False
+            RequireNumbers: True
+            RequireSymbols: False
+            RequireUppercase: True
+
+    UserPoolDomain:
+      Type: AWS::Cognito::UserPoolDomain
+      Properties: 
+        Domain: ${opt:stage}-random-domain-7243523484
+        UserPoolId:  
+          Ref: CognitoUserPool
+    
+    CognitoResourceServer:
+      Type: AWS::Cognito::UserPoolResourceServer
+      Properties:
+        Identifier: ${opt:stage}-resource-server
+        Name: ${opt:stage}-resource-server
+        UserPoolId: 
+          Ref: CognitoUserPool
+        Scopes:
+          - ScopeName: "cloudFriendly.read"
+            ScopeDescription: "Read permissions"
+          - ScopeName: "cloudFriendly.write"
+            ScopeDescription: "Write permissions"
+    
+    CognitoUserPoolClient:
+      Type: "AWS::Cognito::UserPoolClient"
+      Properties:
+        ClientName: ${opt:stage}-user-pool-client
+        GenerateSecret: True
+        AllowedOAuthFlows:
+          - client_credentials        
+        AllowedOAuthScopes:
+          - ${opt:stage}-resource-server/cloudFriendly.read
+          - ${opt:stage}-resource-server/cloudFriendly.write
+        AllowedOAuthFlowsUserPoolClient: true
+        UserPoolId:
+          Ref: CognitoUserPool
+
+    ApiGatewayAuthorizer:
+      DependsOn:
+        - ApiGatewayRestApi
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        Name: cognito-authorizer
+        IdentitySource: method.request.header.Authorization
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - Fn::GetAtt: [CognitoUserPool, Arn]
+Outputs:
+  CognitoUserPoolArn:
+    Value:
+      Fn::GetAtt:
+        - CognitoUserPool
+        - Arn
+    Export:
+      Name: CognitoUserPoolArn-${opt:stage}

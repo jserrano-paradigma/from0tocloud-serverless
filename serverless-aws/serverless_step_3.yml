@@ -1,0 +1,139 @@
+service: from0tocloud-serverless
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: default
+  timeout: 30
+  apiGateway:
+    apiKeySourceType: HEADER
+    apiKeys:
+      - free:
+          - ${opt:stage}-myFreeKey
+      - paid:
+          - ${opt:stage}-myPaidKey
+    usagePlan:
+      - free:
+          quota:
+            limit: 5000
+            offset: 2
+            period: MONTH
+          throttle:
+            burstLimit: 200
+            rateLimit: 100
+      - paid:
+          quota:
+            limit: 50000
+            offset: 1
+            period: MONTH
+          throttle:
+            burstLimit: 2000
+            rateLimit: 1000
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource: "*"
+
+functions:
+  addItem:
+    handler: handlers/addItem.addItem
+    events:
+      - http:
+          method: post
+          path: order-status
+          cors: true
+          operationId: createStatus
+          private: true
+          authorizer:
+            name: ${opt:stage}-myAuthorizer
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+            scopes:
+              - ${opt:stage}-resource-server/cloudFriendly.write
+
+  getOneItem:
+    handler: handlers/getOneItem.getOneItem
+    events:
+      - http: 
+          path: order-status/{id}
+          method: get
+          cors: true
+          operationId: getStatus
+          request:
+            parameters:
+              paths:
+                id: true
+          private: true
+          authorizer:
+            name: ${opt:stage}-myAuthorizer
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+            scopes:
+              - ${opt:stage}-resource-server/cloudFriendly.read
+
+  getAllItems:
+    handler: handlers/getAllItems.getAllItems
+    events:
+      - http: 
+          path: order-status
+          method: get
+          cors: true
+          operationId: getStatusByOrderId
+          private: true
+          authorizer:
+            name: ${opt:stage}-myAuthorizer
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+            scopes:
+              - ${opt:stage}-resource-server/cloudFriendly.read
+
+  updateItem:
+    handler: handlers/updateItem.updateItem
+    events:
+      - http: 
+          path: order-status/{id}
+          method: put
+          cors: true
+          operationId: updateStatus
+          request:
+            parameters:
+              paths:
+                id: true
+          private: true
+          authorizer:
+            name: ${opt:stage}-myAuthorizer
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+            scopes:
+              - ${opt:stage}-resource-server/cloudFriendly.write
+          
+  deleteItem:
+    handler: handlers/deleteItem.deleteItem
+    events:
+      - http: 
+          path: order-status/{id}
+          method: delete
+          cors: true
+          operationId: deleteStatus
+          request:
+            parameters:
+              paths:
+                id: true
+          private: true
+          authorizer:
+            name: ${opt:stage}-myAuthorizer
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+            scopes:
+              - ${opt:stage}-resource-server/cloudFriendly.write
+resources:
+  - ${file(resources/dynamo-table.yml)}
+  - ${file(resources/cognito-user-pool.yml)}
+
+plugins:
+  - serverless-offline

@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "e672bf5e-ebc9-403b-afce-f59dad5429de",
+		"name": "STEP_2: API GW + APIkeys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderStatus\": \"CREADO\",\n    \"description\": \"El pedido ha sido CREADO\",\n    \"orderId\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Status",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"updateDate\": \"2021-10-05\",\n    \"description\": \"El pedido ha sido ENVIADO\",\n    \"status\": \"ENVIADO\",\n    \"orderId\": \"123456\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status/WTP3cjV3AWih5o0N",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status",
+						"WTP3cjV3AWih5o0N"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get status by orderID",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status?orderId=123456",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get status by id",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status/-m0W12pQJEmMe0k4",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status",
+						"-m0W12pQJEmMe0k4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete status",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status/-m0W12pQJEmMe0k4",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status",
+						"-m0W12pQJEmMe0k4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,14 @@
+service: from0tocloud-serverless
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: default
+  timeout: 30
+  iamRoleStatements:
+
+functions:
+
+resources:
+
+plugins:
+  - serverless-offline

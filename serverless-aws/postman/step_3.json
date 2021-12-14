@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "57eb3433-27b9-4518-9353-5c8e58ad08d6",
+		"name": "STEP_3: API GW+ AIkeys + Cognito",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Status",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://dev-random-domain-7243523484.auth.us-east-1.amazoncognito.com/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "dev-resource-server/cloudFriendly.write",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "{{CLIENT_SECRET}}",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "{{CLIENT_ID}}",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJxNE9adWx6bG1EYmYrXC9VMWNYc0lmNmpEUGYyc3lBSWx5OTk3eloxTUY3VT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI3ZnJnOXE3ajdvODRlYjV0cHBjM3Q2dnMwbiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiZGV2LXJlc291cmNlLXNlcnZlclwvY2xvdWRGcmllbmRseS53cml0ZSIsImF1dGhfdGltZSI6MTYzMzU5OTczMywiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfQnRJUkdPNk5yIiwiZXhwIjoxNjMzNjAzMzMzLCJpYXQiOjE2MzM1OTk3MzMsInZlcnNpb24iOjIsImp0aSI6ImVkMDA1OWVjLTJkNzEtNGEwMS1hYjczLTQ3OWM2NzE1NjFkOSIsImNsaWVudF9pZCI6Ijdmcmc5cTdqN284NGViNXRwcGMzdDZ2czBuIn0.a7_vfPYeZp3OqCM-q9ixjaZMHfSF-DmihgMtrINjjeSx8aLWtN6-Miwl4j-9VC1pXackzOPHCU-OSOPtdhhpFnR1wKEDeAJetyf37iUFJv8lc1q7jUEMXU7HZO-W8fgTM7yd4a4wz0JCrAReocB5acqllk9O8TdMHWxdztFwQWe-wjeOWezVachBXbM6JA-NoSSL8vG4aw6LNw6rxLZLzErj7X4ERCPR2_8P928RmRCp18f51ALH8kvODfUcPtr9Rt-VNgf6CXUkuORp2KaIOehTvDGf7d2MXnJQ0fj4clgYyEsxJ4-ts04WmAtP7xieFzLuCQFfFWhCe82AJdnbvg",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "Cognito Token",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderStatus\": \"CREADO\",\n    \"description\": \"El pedido ha sido CREADO\",\n    \"orderId\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Status",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://dev-random-domain-7243523484.auth.us-east-1.amazoncognito.com/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "dev-resource-server/cloudFriendly.write",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "{{CLIENT_SECRET}}",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "{{CLIENT_ID}}",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "Cognito Token",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"updateDate\": \"2021-10-05\",\n    \"description\": \"El pedido ha sido ENVIADO\",\n    \"status\": \"ENVIADO\",\n    \"orderId\": \"123456\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status/0A0cQCrkP8VCV2t7",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status",
+						"0A0cQCrkP8VCV2t7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get status by orderID",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://dev-random-domain-7243523484.auth.us-east-1.amazoncognito.com/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "dev-resource-server/cloudFriendly.write",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "{{CLIENT_SECRET}}",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "{{CLIENT_ID}}",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "Cognito Token",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status?oderId=123456",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status"
+					],
+					"query": [
+						{
+							"key": "oderId",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get status by id",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://dev-random-domain-7243523484.auth.us-east-1.amazoncognito.com/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "dev-resource-server/cloudFriendly.write",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "{{CLIENT_SECRET}}",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "{{CLIENT_ID}}",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "Cognito Token",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status/-m0W12pQJEmMe0k4",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status",
+						"-m0W12pQJEmMe0k4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete status",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessTokenUrl",
+							"value": "https://dev-random-domain-7243523484.auth.us-east-1.amazoncognito.com/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "{{CLIENT_SECRET}}",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "{{CLIENT_ID}}",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJQNERQTnA3VDF1NFJnZ1UwTml5WkpORVphK1pYSTIzajZ0NWJIeGhzTFZvPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJ2cXN2bWtkMGMxaTVhdTRrdW85aTRvamJsIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJkZXYtcmVzb3VyY2Utc2VydmVyXC9jbG91ZEZyaWVuZGx5LndyaXRlIiwiYXV0aF90aW1lIjoxNjMzNTk1Nzc4LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9DYVRQNDhQNU4iLCJleHAiOjE2MzM1OTkzNzgsImlhdCI6MTYzMzU5NTc3OCwidmVyc2lvbiI6MiwianRpIjoiZDg2ZWNlNjAtYTc3NC00M2ZjLTlmYjctMWZlNmJlYTIyYzNiIiwiY2xpZW50X2lkIjoidnFzdm1rZDBjMWk1YXU0a3VvOWk0b2pibCJ9.GgmmDQ3Nz1LI6KPIT_RWbI51lxCy4daYQxMTxi__CDZ50q5N59mPuzc_aRbUQ9mirbNd5sC_ceXqwXbExiEznFIKKmETrGn9oRy3n0W2TJj1a8LvDNokdErDM9mlugIFW0OYzmLokvvSfWSI5M3ZRwZkKpDru6Ra6lpGgQyHtak0FamFTXyd5BhKlR6goE4Qm-bhhjWAnNnJZmVMfgwB5JYsoXE8X0W5MEPr8WbEsU4JYKYY77VZOxXsw6agvN3a9Ajsrv8jVVXv8CqHnqZ7YxYqdxWJAGwL84UzcWnYMG5o9J9hZso7mbaEusOT5MzGv2fN9wbd6Y3GoCufdI0tww",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "dev-resource-server/cloudFriendly.write",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "Cognito Token",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{API-KEY}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API-GW}}/dev/order-status/-m0W12pQJEmMe0k4",
+					"host": [
+						"{{API-GW}}"
+					],
+					"path": [
+						"dev",
+						"order-status",
+						"-m0W12pQJEmMe0k4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

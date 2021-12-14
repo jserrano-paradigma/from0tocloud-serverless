@@ -1,0 +1,34 @@
+Resources:
+  myDynamoDBTable:    
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${opt:stage}-from0tocloud-serverless   
+      AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S" 
+        - AttributeName: "orderId"
+          AttributeType: "S" 
+      KeySchema:
+        - AttributeName: "id"    
+          KeyType: "HASH"
+      ProvisionedThroughput:   
+        ReadCapacityUnits: 10
+        WriteCapacityUnits: 10
+      GlobalSecondaryIndexes: [ 
+          { 
+              IndexName: 'order_index', 
+              KeySchema: [
+                  { 
+                      AttributeName: 'orderId',
+                      KeyType: 'HASH'
+                  }
+              ],
+              Projection: { 
+                  ProjectionType: 'ALL' 
+              },
+              ProvisionedThroughput: { 
+                  ReadCapacityUnits: 10,
+                  WriteCapacityUnits: 10
+              }
+          }
+      ]
